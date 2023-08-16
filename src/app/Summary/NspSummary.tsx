@@ -14,7 +14,9 @@ import {
   GridItem
 } from '@patternfly/react-core';
 import { NspTableComponent } from './NspTableComponent'; // Replace with your table component
-import Img from './Nspimg.png';
+import NspMmr from '!!url-loader!@app/Summary/mmr_nsp.png';
+import Cpu_nsp from '!!url-loader!@app/Summary/cpu_nsp.png';
+
 const NspSummary = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [usecase, setUsecase] = useState('Select one');
@@ -63,7 +65,11 @@ const NspSummary = () => {
           <Tab key={index} eventKey={index} title={tabTitle}>
             <br />
             <NspTableComponent />
-            <img src={Img} alt="Logo" />;
+            <br />
+            <br />
+            <img src={Cpu_nsp} alt="Logo" />
+            ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src={NspMmr} alt="Logo" />;
           </Tab>
         ))}
       </Tabs>
