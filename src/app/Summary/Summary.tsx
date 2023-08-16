@@ -14,7 +14,9 @@ import {
   GridItem
 } from '@patternfly/react-core';
 import { TableComponent } from './TableComponent'; // Replace with your table component
-import Img from './img.png';
+import Cpu_Cluster from './cpu_cluster.png';
+import Mmr_Cluster from './mmr_cluster.png';
+
 const Summary = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [usecase, setUsecase] = useState('Select one');
@@ -63,7 +65,11 @@ const Summary = () => {
           <Tab key={index} eventKey={index} title={tabTitle}>
             <br />
             <TableComponent />
-            <img src={Img} alt="Logo" />;
+            &nbsp; &nbsp;
+            <br />
+            <img src={Cpu_Cluster} alt="Logo" />
+            ;&nbsp;
+            <img src={Mmr_Cluster} alt="Logo" />;
           </Tab>
         ))}
       </Tabs>

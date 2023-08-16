@@ -150,7 +150,7 @@ const TableComponent = () => {
           <Tr>
             <Td dataLabel={columnNames.cluster_name} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              <Link to="/nspsummary"> cluster 1</Link>
+              cluster 2
             </Td>
 
             <Td dataLabel={columnNames.idle} textCenter>
@@ -185,7 +185,7 @@ const TableComponent = () => {
           <Tr>
             <Td dataLabel={columnNames.cluster_name} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              cluster 2
+              cluster 4
             </Td>
             <Td dataLabel={columnNames.idle} textCenter>
               {/* {cluster_summ_data.classification.idle} */}5
@@ -216,7 +216,41 @@ const TableComponent = () => {
           <Tr>
             <Td dataLabel={columnNames.cluster_name} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              cluster 3
+              <Link to="/nspsummary"> cluster 1</Link>
+            </Td>
+            <Td dataLabel={columnNames.idle} textCenter>
+              {/* {cluster_summ_data.classification.idle} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimized} textCenter>
+              {/* {cluster_summ_data.name} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.critical} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimizable} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.total} textCenter>
+              {/* {cluster_summ_data.} */}
+              80
+            </Td>
+            <Td dataLabel={columnNames.cpu} textCenter>
+              {/* {cluster_summ_data.} */}
+              0.196 cores
+            </Td>
+            <Td dataLabel={columnNames.mem} textCenter>
+              {/* {cluster_summ_data.} */}
+              148.409 MiB
+            </Td>
+          </Tr>
+          <Tr>
+            <Td dataLabel={columnNames.cluster_name} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cluster 5
             </Td>
             <Td dataLabel={columnNames.idle} textCenter>
               {/* {cluster_summ_data.classification.idle} */}
@@ -245,6 +279,40 @@ const TableComponent = () => {
             <Td dataLabel={columnNames.mem} textCenter>
               {/* {cluster_summ_data.} */}
               62.112 MiB
+            </Td>
+          </Tr>
+          <Tr>
+            <Td dataLabel={columnNames.cluster_name} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cluster 3
+            </Td>
+            <Td dataLabel={columnNames.idle} textCenter>
+              {/* {cluster_summ_data.classification.idle} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimized} textCenter>
+              {/* {cluster_summ_data.name} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.critical} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimizable} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.total} textCenter>
+              {/* {cluster_summ_data.} */}
+              80
+            </Td>
+            <Td dataLabel={columnNames.cpu} textCenter>
+              {/* {cluster_summ_data.} */}
+              0.179 cores
+            </Td>
+            <Td dataLabel={columnNames.mem} textCenter>
+              {/* {cluster_summ_data.} */}
+              175.887 MiB
             </Td>
           </Tr>
         </Tbody>

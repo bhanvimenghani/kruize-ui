@@ -7,16 +7,16 @@ import { Link } from 'react-router-dom';
 const NspTableComponent = () => {
   const columnNames = {
     cluster_name: 'Cluster Name',
-    classification: 'classification',
+    classification: 'Classification',
     idle: 'idle',
     optimized: 'optimized',
     critical: 'critical',
     optimizable: 'optimizable',
-    variation: 'variation',
+    variation: 'Tariation',
     cpu: 'cpu',
     mem: 'memory',
     charts: 'Charts',
-    total: 'total',
+    total: 'Total',
     namespace: 'Namespace'
   };
 
@@ -159,7 +159,7 @@ const NspTableComponent = () => {
 
             <Td dataLabel={columnNames.namespace} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              namespace 1
+              advisor-stage
             </Td>
             <Td dataLabel={columnNames.total} textCenter>
               {/* {cluster_summ_data.} */}
@@ -184,11 +184,11 @@ const NspTableComponent = () => {
 
             <Td dataLabel={columnNames.cpu} textCenter>
               {/* {cluster_summ_data.} */}
-              0.035 cores
+              1.574 cores
             </Td>
             <Td dataLabel={columnNames.mem} textCenter>
               {/* {cluster_summ_data.} */}
-              25.496 MiB
+              620 MiB
             </Td>
           </Tr>
           <Tr>
@@ -198,7 +198,7 @@ const NspTableComponent = () => {
             </Td>
             <Td dataLabel={columnNames.namespace} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              namespace 2
+              blackbox-monitor-stage
             </Td>
             <Td dataLabel={columnNames.total} textCenter>
               {/* {cluster_summ_data.} */}
@@ -219,11 +219,11 @@ const NspTableComponent = () => {
             </Td>
 
             <Td dataLabel={columnNames.cpu} textCenter>
-              {/* {cluster_summ_data.} */}1.449 cores
+              {/* {cluster_summ_data.} */}0.196 cores
             </Td>
             <Td dataLabel={columnNames.mem} textCenter>
               {/* {cluster_summ_data.} */}
-              231.683 MiB
+              164 MiB
             </Td>
           </Tr>
 
@@ -234,7 +234,7 @@ const NspTableComponent = () => {
             </Td>
             <Td dataLabel={columnNames.namespace} textCenter>
               {/* {cluster_summ_data.cluster_name} */}
-              namespace 3
+              cert-manager
             </Td>
             <Td dataLabel={columnNames.total} textCenter>
               {/* {cluster_summ_data.} */}
@@ -259,11 +259,128 @@ const NspTableComponent = () => {
 
             <Td dataLabel={columnNames.cpu} textCenter>
               {/* {cluster_summ_data.} */}
-              0.104 cores
+              0.0158 cores
             </Td>
             <Td dataLabel={columnNames.mem} textCenter>
               {/* {cluster_summ_data.} */}
-              62.112 MiB
+              824 MiB
+            </Td>
+          </Tr>
+          <Tr>
+            <Td dataLabel={columnNames.cluster_name} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cluster 1
+            </Td>
+            <Td dataLabel={columnNames.namespace} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cloud-connector-stage
+            </Td>
+            <Td dataLabel={columnNames.total} textCenter>
+              {/* {cluster_summ_data.} */}
+              80
+            </Td>
+            <Td dataLabel={columnNames.idle} textCenter>
+              {/* {cluster_summ_data.classification.idle} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimized} textCenter>
+              {/* {cluster_summ_data.name} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.critical} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimizable} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+
+            <Td dataLabel={columnNames.cpu} textCenter>
+              {/* {cluster_summ_data.} */}
+              0.681 cores
+            </Td>
+            <Td dataLabel={columnNames.mem} textCenter>
+              {/* {cluster_summ_data.} */}
+              663 MiB
+            </Td>
+          </Tr>
+          <Tr>
+            <Td dataLabel={columnNames.cluster_name} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cluster 1
+            </Td>
+            <Td dataLabel={columnNames.namespace} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              historical-system-profiles-stage
+            </Td>
+            <Td dataLabel={columnNames.total} textCenter>
+              {/* {cluster_summ_data.} */}
+              80
+            </Td>
+            <Td dataLabel={columnNames.idle} textCenter>
+              {/* {cluster_summ_data.classification.idle} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimized} textCenter>
+              {/* {cluster_summ_data.name} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.critical} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimizable} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+
+            <Td dataLabel={columnNames.cpu} textCenter>
+              {/* {cluster_summ_data.} */}
+              0.753 cores
+            </Td>
+            <Td dataLabel={columnNames.mem} textCenter>
+              {/* {cluster_summ_data.} */}
+              1089 MiB
+            </Td>
+          </Tr>
+          <Tr>
+            <Td dataLabel={columnNames.cluster_name} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              cluster 1
+            </Td>
+            <Td dataLabel={columnNames.namespace} textCenter>
+              {/* {cluster_summ_data.cluster_name} */}
+              vulnerability-engine-stage
+            </Td>
+            <Td dataLabel={columnNames.total} textCenter>
+              {/* {cluster_summ_data.} */}
+              80
+            </Td>
+            <Td dataLabel={columnNames.idle} textCenter>
+              {/* {cluster_summ_data.classification.idle} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimized} textCenter>
+              {/* {cluster_summ_data.name} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.critical} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+            <Td dataLabel={columnNames.optimizable} textCenter>
+              {/* {cluster_summ_data.} */}
+              20
+            </Td>
+
+            <Td dataLabel={columnNames.cpu} textCenter>
+              {/* {cluster_summ_data.} */}
+              1.7527 cores
+            </Td>
+            <Td dataLabel={columnNames.mem} textCenter>
+              {/* {cluster_summ_data.} */}
+              2260 MiB
             </Td>
           </Tr>
         </Tbody>
