@@ -13,6 +13,8 @@ import { Glossary } from './Documentation/Glossary';
 import { CommunityCall } from './Documentation/CommunityCall';
 import { NotFound } from '@app/NotFound/NotFound';
 import { LastLocationProvider, useLastLocation } from 'react-router-last-location';
+import Summary from '@app/Summary/Summary';
+import NspSummary from '@app/Summary/NspSummary';
 
 let routeFocusTimer: number;
 export interface IAppRoute {
@@ -73,6 +75,23 @@ const routes: AppRouteConfig[] = [
     ],
     menu: true
   },
+  {
+    component: Summary,
+    exact: true,
+    label: 'Summary (Mock)',
+    path: '/summary',
+    title: 'Summary',
+    menu: true
+  },
+  {
+    component: NspSummary,
+    exact: true,
+    label: 'Nsp Summary',
+    path: '/nspsummary',
+    title: 'Nsp Summary',
+    menu: false
+  },
+
   {
     label: 'Advanced User',
     routes: [
