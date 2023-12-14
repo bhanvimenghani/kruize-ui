@@ -10,6 +10,8 @@ RUN npm config set legacy-peer-deps true \
 
 FROM nginx:latest
 
+USER root
+
 RUN rm /etc/nginx/conf.d/default.conf \
   && mkdir -p /var/cache/nginx/proxy_temp /var/cache/nginx/client_temp /var/run/nginx \
   && chown -R nginx:nginx /var/cache/nginx /var/run/nginx \
