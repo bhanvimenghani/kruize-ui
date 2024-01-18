@@ -28,7 +28,7 @@ const RecommendationTables = (props: { endTimeArray; setEndTimeArray; SREdata; s
   const [recommendedData, setRecommendedData] = useState([]);
   const [chartDetailsData, setChartDetailsData] = useState([]);
   const [day, setDay] = useState('short_term');
-  const [displayChart, setDisplayChart] = useState(true);
+  const [displayChart, setDisplayChart] = useState(false);
 
   const days = [
     { id: '1', value: 'short_term', label: 'Last 1 day', disabled: false },
@@ -86,8 +86,8 @@ const RecommendationTables = (props: { endTimeArray; setEndTimeArray; SREdata; s
             }
           }
         });
-        if (recommended_arr[0].recommendation_engines) {
-          // console.log('render ', recommended_arr);
+        if (recommended_arr[0].recommendation_engines && recommended_arr[0].recommendation_engines !== undefined) {
+          console.log('render ', recommended_arr[0].recommendation_engines);
           setDisplayChart(true);
         } else {
           setDisplayChart(false);
@@ -107,6 +107,7 @@ const RecommendationTables = (props: { endTimeArray; setEndTimeArray; SREdata; s
 
   const onDayChange = (value: string) => {
     setDay(value);
+    setDisplayChart(false);
   };
 
   return (
@@ -141,6 +142,7 @@ const RecommendationTables = (props: { endTimeArray; setEndTimeArray; SREdata; s
                       value={endtime}
                       onChange={(_event, value: string) => onChange(value)}
                       aria-label="FormSelect Input"
+                      style={{ width: '300px' }}
                     >
                       {props.endTimeArray &&
                         props.endTimeArray.map((option, index) => (
@@ -164,6 +166,7 @@ const RecommendationTables = (props: { endTimeArray; setEndTimeArray; SREdata; s
                     value={day}
                     onChange={(_event, value: string) => onDayChange(value)}
                     aria-label="days dropdown"
+                    style={{ width: '150px' }}
                   >
                     {days.map((selection, index) => (
                       <FormSelectOption key={index} value={selection.value} label={selection.label} />
