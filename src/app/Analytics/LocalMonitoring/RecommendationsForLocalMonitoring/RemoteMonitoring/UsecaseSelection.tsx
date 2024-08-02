@@ -9,7 +9,8 @@ import {
   Grid,
   GridItem,
   Alert,
-  Tooltip
+  Tooltip,
+  FlexItem
 } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
 import {
@@ -20,7 +21,7 @@ import {
 } from '@app/CentralConfig';
 import { SyncAltIcon } from '@patternfly/react-icons';
 
-const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSREdata; switchTab }) => {
+const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSREdata; setDisplayRecc}) => {
   const list_recommendations_url: string = getRecommendationsURLWithParams(props.SREdata.experiment_name, 'false');
   const list_experiment_url: string = getListExperimentsURL();
 
@@ -45,6 +46,24 @@ const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSR
   }, []);
 
   const onChangeExpName = async (value: string) => {
+
+    setValue('');
+    setExpName('');
+    setExpUsecaseType('');
+    props.setSREdata({
+      experiment_name: '',
+      containerArray: [],
+      namespace: '',
+      name: '',
+      type: '',
+      cluster_name: '',
+      container_name: '',
+      experiment_type: ''
+    });
+    props.setEndTimeArray([]);
+    props.setDisplayRecc(false);
+
+    
     setValue(value);
     setExpName(value);
 
@@ -58,11 +77,16 @@ const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSR
       console.log(usecase);
       setExpUsecaseType(usecase);
     }
+    handleClick(value);
   };
 
-  const handleClick = async () => {
+  const handleClick = async (exp_name_value) => {
     try {
-      props.switchTab(1);
+      props.setDisplayRecc(true);
+      // props.switchTab(1);
+
+      const list_recommendations_url: string = getRecommendationsURLWithParams(exp_name_value, 'false');
+
       const data = await (await fetch(list_recommendations_url)).json();
       var namespace = data[0].kubernetes_objects[0].namespace;
       var name = data[0].kubernetes_objects[0].name;
@@ -112,7 +136,7 @@ const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSR
       if (response.ok) {
         setShowFailureAlert(false);
         setTimeout(() => setShowFailureAlert(false), 3000);
-        handleClick();
+        handleClick(expName);
       }
     } catch (error) {
       console.error('Error during data import:', error);
@@ -129,28 +153,37 @@ const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSR
           <TextContent>
             <Text component={TextVariants.h3}>Experiment Name</Text>
           </TextContent>
-          <GridItem span={4} component="li">
-            <FormSelect
-              value={expName}
-              onChange={(_event, value: string) => onChangeExpName(value)}
-              aria-label="FormSelect Input"
-            >
-              {expData != null &&
-                expData.map((option, index) => <FormSelectOption key={index} value={option} label={option} />)}
-            </FormSelect>
+          <GridItem component="li">
+            <Flex>
+              <FlexItem>
+                <FormSelect
+                  label="Select an experiment"
+                  value={expName}
+                  onChange={(_event, value: string) => onChangeExpName(value)}
+                  aria-label="FormSelect Input"
+                >
+                  {expData != null &&
+                    expData.map((option, index) => <FormSelectOption key={index} value={option} label={option} />)}
+                </FormSelect>
+              </FlexItem>
+             
+              {/* <FlexItem>
+                <Button variant="primary" onClick={handleClick} isDisabled={!expName}>
+                  Recommendations
+                </Button>
+              </FlexItem> */}
+              <FlexItem>
+                <Tooltip id="tooltip-ref1" content={<div> Generate Reccomendations</div>}>
+                  <SyncAltIcon onClick={() => handleGenerateRecommendationClick(expName)} />
+                </Tooltip>
+              </FlexItem>
+            </Flex>
           </GridItem>
-          <GridItem span={10}></GridItem>
-
           <GridItem span={3} component="li">
-            <Button variant="primary" onClick={handleClick}>
+            {/* <Button variant="primary" onClick={handleClick}>
               Recommendations
-            </Button>
+            </Button> */}
 
-            <div style={{ marginLeft: '18px', display: 'inline-block' }}>
-              <Tooltip id="tooltip-ref1" content={<div>Calls Generate Reccomendations</div>}>
-                <SyncAltIcon onClick={() => handleGenerateRecommendationClick(expName)} />
-              </Tooltip>
-            </div>
             {/* <SyncAltIcon onClick={() => handleGenerateRecommendationClick(expName)} /> */}
           </GridItem>
         </Grid>
