@@ -21,9 +21,9 @@ import {
 import { SyncAltIcon } from '@patternfly/react-icons';
 
 const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSREdata; switchTab }) => {
-  const list_recommendations_url: string = getRecommendationsURLWithParams(props.SREdata.experiment_name, 'false');
+  // const list_recommendations_url: string = getRecommendationsURLWithParams(props.SREdata.experiment_name, 'false');
+  const list_recommendations_url: string = 'https://mocki.io/v1/a1b77535-31ae-488f-b927-01583e0b5103'
   const list_experiment_url: string = getListExperimentsURL();
-
   const [value, setValue] = useState('');
   const [expName, setExpName] = useState<any | null>('');
   const [expUsecaseType, setExpUsecaseType] = useState<string | undefined>('');
@@ -64,6 +64,7 @@ const UsecaseSelection = (props: { endTimeArray; setEndTimeArray; SREdata; setSR
     try {
       props.switchTab(1);
       const data = await (await fetch(list_recommendations_url)).json();
+      console.log(data[0].kubernetes_objects[0].containers[0].recommendations.data)
       var namespace = data[0].kubernetes_objects[0].namespace;
       var name = data[0].kubernetes_objects[0].name;
       var type = data[0].kubernetes_objects[0].type;

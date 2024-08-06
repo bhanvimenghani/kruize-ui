@@ -44,11 +44,13 @@ const getClusterMetadataURL = (datasource_name : string, cluster_name : string) 
 }
 
 const getRecommendationsURLWithParams = (experiment_name: string, latest: string) => {
-    return getBaseUrl() + '/listRecommendations?experiment_name=' + experiment_name + '&latest=' + latest
+    // return getBaseUrl() + '/listRecommendations?experiment_name=' + experiment_name + '&latest=' + latest
+    return 'https://mocki.io/v1/a1b77535-31ae-488f-b927-01583e0b5103' + experiment_name + '&latest=' + latest;
 }
 
 const getRecommendationsURL = () => {
-    return getBaseUrl() + '/listRecommendations';
+    // return getBaseUrl() + '/listRecommendations';
+    return 'https://mocki.io/v1/a1b77535-31ae-488f-b927-01583e0b5103';
 }
 
 const getListExperimentsURLWithParams = (experiment_name: string) => {
