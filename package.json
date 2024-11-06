@@ -89,7 +89,7 @@
     "webpack-merge": "^5.9.0"
   },
   "peerDependencies": {
-    "monaco-editor": "^0.21.3",
+    "monaco-editor": "^0.34.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-monaco-editor": "^0.51.0"
@@ -125,7 +125,7 @@
     "marked": "^9.1.2",
     "mathjax-react": "^2.0.1",
     "minimal-package": "^1.0.0",
-    "monaco-editor": "^0.21.3",
+    "monaco-editor": "^0.34.1",
     "monaco-editor-webpack-plugin": "^2.1.0",
     "monaco-yaml": "^4.0.2",
     "not": "^0.1.0",
