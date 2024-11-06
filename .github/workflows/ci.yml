@@ -8,6 +8,7 @@ on:
     branches: [mvp_demo]
 
 # Define the jobs to run as part of this workflow
+#test
 jobs:
   build:
     runs-on: ubuntu-latest
