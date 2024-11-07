@@ -8,8 +8,33 @@ on:
     branches: [mvp_demo]
 
 # Define the jobs to run as part of this workflow
-#test
+
 jobs:
+#Job 1
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js (specify version if needed)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm config set legacy-peer-deps true && npm install
+
+      # Step 4: Build the UI
+      - name: Build UI
+        run: npm run build
+  
+  #Job 2
   build:
     runs-on: ubuntu-latest
 
@@ -30,9 +55,7 @@ jobs:
         run: npm config set legacy-peer-deps true && npm install
 
       # # Step 4: Run Tests
-      # - name: Run Tests
-      #   run: npm test
+      - name: Run Tests
+        run: npm run test
 
-      # Step 5: Build the UI
-      - name: Build UI
-        run: npm run build
+
