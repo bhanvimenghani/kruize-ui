@@ -80,9 +80,8 @@ jobs:
       - name: Build crc
         run: |
           echo Build crc
-          pr_number=${{ github.event.pull_request.number }}
-          echo "pr_number=${pr_number}" >> "$GITHUB_ENV"
-          ./build.sh -i autotune_operator:pr_${pr_number}
+
+          ./autotune-repo/build.sh 
           docker images | grep autotune
 
       - name: Check cluster info on minikube
@@ -115,3 +114,11 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}
           tar cvf crc_results.tar kruize_test_results
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: crc-results
+          path: ./crc_results.tar
+          retention-days: 2
