@@ -70,6 +70,7 @@ jobs:
           repository: kruize/autotune
           ref: mvp_demo
           path: autotune-repo
+
       # Setup Minikube
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@v2.3.0
@@ -85,12 +86,13 @@ jobs:
       # Install Prometheus
       - name: Install Prometheus
         run: |
-          cd scripts
+          cd autotune-repo/monitoring/local_monitoring
           ./prometheus_on_minikube.sh -as
 
       # Deploy Kruize
       - name: Deploy Kruize
         run: |
+          cd autotune-repo
           ./deploy.sh -c minikube
           sleep 20
 
@@ -98,6 +100,7 @@ jobs:
       - name: Capture logs
         if: always()
         run: |
+          cd autotune-repo/scripts
           ./scripts/ffdc.sh -d ${GITHUB_WORKSPACE}
 
       - name: Archive results
