@@ -62,7 +62,6 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
       # Step 2: Checkout the additional repository (kruize/autotune)
       - name: Checkout kruize/autotune repository
         uses: actions/checkout@v3
@@ -78,35 +77,41 @@ jobs:
           minikube version: 'v1.16.0'
           kubernetes version: 'v1.19.2'
 
-      - name: Display cluster info
+      - name: Build crc
+        run: |
+          echo Build crc
+          pr_number=${{ github.event.pull_request.number }}
+          echo "pr_number=${pr_number}" >> "$GITHUB_ENV"
+          ./build.sh -i autotune_operator:pr_${pr_number}
+          docker images | grep autotune
+
+      - name: Check cluster info on minikube
         run: |
           kubectl cluster-info
           kubectl get pods -n kube-system
-
-      # Install Prometheus
-      - name: Install Prometheus
+      - name: Install Prometheus on minikube
         run: |
-          cd autotune-repo/scripts
+          echo Install Prometheus on minikube
+          cd scripts
           ./prometheus_on_minikube.sh -as
 
-      # Deploy Kruize
-      - name: Deploy Kruize
+      - name: Deploy Kruize in crc mode
         run: |
-          cd autotune-repo
-          ./deploy.sh -c minikube
-          sleep 20
-
-      # Capture logs
-      - name: Capture logs
+          echo Deploy kruize in crc mode
+          echo "***************************************************************"
+          cp ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml.old
+          sed -e "s/imagePullPolicy: Always/imagePullPolicy: IfNotPresent/g" ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml.old > ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml
+          cat ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml
+          cd tests
+          echo "PR_NUMBER = ${{ env.pr_number }}"
+          ./test_autotune.sh -c minikube -i autotune_operator:pr_${{ env.pr_number }} --testsuite=remote_monitoring_tests --testcase=test_e2e --resultsdir=${GITHUB_WORKSPACE}
+      - name: Capture ffdc logs
         if: always()
         run: |
-          cd autotune-repo/scripts
-          ./scripts/ffdc.sh -d ${GITHUB_WORKSPACE}
-
+          echo "Capturing ffdc logs"
+          ./scripts/ffdc.sh -m crc -d ${GITHUB_WORKSPACE}/kruize_test_results
       - name: Archive results
         if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: kruize-logs
-          path: ./${GITHUB_WORKSPACE}
-          retention-days: 2
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          tar cvf crc_results.tar kruize_test_results
