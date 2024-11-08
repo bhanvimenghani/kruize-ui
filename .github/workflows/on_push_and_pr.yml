@@ -58,20 +58,52 @@ jobs:
       - name: Run Tests
         run: npm run test
 
-  run-local-monitoring:
-    runs-on: ubuntu-latest # or choose any runner based on your needs
+  deploy_kruize:
+    runs-on: ubuntu-20.04
 
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v3
-
-      - name: Checkout the kruize-demos repository
+      - uses: actions/checkout@v3
+      # Step 2: Checkout the additional repository (kruize/autotune)
+      - name: Checkout kruize/autotune repository
         uses: actions/checkout@v3
         with:
-          repository: kruize/kruize-demos # Clone the kruize-demos repo
-          path: kruize-demos # Optional path to store the repo locally
+          repository: kruize/autotune
+          ref: mvp_demo
+          path: autotune-repo
+      # Setup Minikube
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.3.0
+        with:
+          minikube version: 'v1.16.0'
+          kubernetes version: 'v1.19.2'
 
-      - name: Run Local Monitoring Demo Script
+      - name: Display cluster info
         run: |
-          chmod +x ./kruize-demos/monitoring/local_monitoring/local_monitoring_demo.sh
-          ./kruize-demos/monitoring/local_monitoring/local_monitoring_demo.sh -c minikube -e container
+          kubectl cluster-info
+          kubectl get pods -n kube-system
+
+      # Install Prometheus
+      - name: Install Prometheus
+        run: |
+          cd scripts
+          ./prometheus_on_minikube.sh -as
+
+      # Deploy Kruize
+      - name: Deploy Kruize
+        run: |
+          ./deploy.sh -c minikube
+          sleep 20
+
+      # Capture logs
+      - name: Capture logs
+        if: always()
+        run: |
+          ./scripts/ffdc.sh -d ${GITHUB_WORKSPACE}
+
+      - name: Archive results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: kruize-logs
+          path: ./${GITHUB_WORKSPACE}
+          retention-days: 2
