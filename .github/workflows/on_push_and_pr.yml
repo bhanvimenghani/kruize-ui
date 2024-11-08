@@ -57,3 +57,21 @@ jobs:
       # # Step 4: Run Tests
       - name: Run Tests
         run: npm run test
+
+  run-local-monitoring:
+    runs-on: ubuntu-latest # or choose any runner based on your needs
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      - name: Checkout the kruize-demos repository
+        uses: actions/checkout@v3
+        with:
+          repository: kruize/kruize-demos # Clone the kruize-demos repo
+          path: kruize-demos # Optional path to store the repo locally
+
+      - name: Run Local Monitoring Demo Script
+        run: |
+          chmod +x ./kruize-demos/monitoring/local_monitoring/local_monitoring_demo.sh
+          ./kruize-demos/monitoring/local_monitoring/local_monitoring_demo.sh -c minikube -e container
