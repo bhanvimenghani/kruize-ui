@@ -86,7 +86,7 @@ jobs:
       # Install Prometheus
       - name: Install Prometheus
         run: |
-          cd autotune-repo/monitoring/local_monitoring
+          cd autotune-repo/scripts
           ./prometheus_on_minikube.sh -as
 
       # Deploy Kruize
