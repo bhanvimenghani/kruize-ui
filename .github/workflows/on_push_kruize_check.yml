@@ -20,7 +20,7 @@ jobs:
         with:
           repository: kruize/autotune
           ref: mvp_demo
-          path: autotune-repo
+          path: autotune
 
       # Setup Minikube
       - name: Setup Minikube
@@ -30,8 +30,8 @@ jobs:
           kubernetes version: 'v1.19.2'
       - name: Set Root Directory
         run: |
-          echo "Setting ROOT_DIR to autotune-repo"
-          echo "ROOT_DIR=$GITHUB_WORKSPACE/autotune-repo" >> $GITHUB_ENV
+          echo "Setting ROOT_DIR to autotune"
+          echo "ROOT_DIR=$GITHUB_WORKSPACE/autotune" >> $GITHUB_ENV
 
       - name: Build crc
         env:
@@ -39,7 +39,7 @@ jobs:
         run: |
           echo Build crc
 
-          ./autotune-repo/build.sh 
+          ./autotune/build.sh 
           docker images | grep autotune
 
       - name: Check cluster info on minikube
