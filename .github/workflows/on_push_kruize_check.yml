@@ -31,9 +31,11 @@ jobs:
       - name: Set Root Directory
         run: |
           echo "Setting ROOT_DIR to autotune-repo"
-          echo "ROOT_DIR=autotune-repo" >> $GITHUB_ENV
+          echo "ROOT_DIR=$GITHUB_WORKSPACE/autotune-repo" >> $GITHUB_ENV
 
       - name: Build crc
+        env:
+          ROOT_DIR: ${{ env.ROOT_DIR }}
         run: |
           echo Build crc
 
