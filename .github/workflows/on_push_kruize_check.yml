@@ -38,8 +38,8 @@ jobs:
           ROOT_DIR: ${{ env.ROOT_DIR }}
         run: |
           echo Build crc
-
-          ./autotune/build.sh 
+          cd autotune
+          ./build.sh 
           docker images | grep autotune
 
       - name: Check cluster info on minikube
