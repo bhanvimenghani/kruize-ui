@@ -8,11 +8,9 @@ on:
    branches: [mvp_demo]
 
 jobs:
-#Job 1 - 
  deploy_kruize:
    runs-on: ubuntu-20.04
    steps:
-     # Step 2: Checkout the additional repository (kruize/autotune)
      - name: Checkout kruize/autotune repository
        uses: actions/checkout@v3
        with:
