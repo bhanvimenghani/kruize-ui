@@ -81,6 +81,7 @@ jobs:
           retention-days: 2
 
   build_ui:
+    needs: deploy_kruize
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -95,10 +96,25 @@ jobs:
       - name: Install Dependencies
         run: npm config set legacy-peer-deps true && npm install
 
+        # Step 5: Get Minikube IP
+      - name: Get Minikube IP
+        run: |
+          export CLUSTER_IP=$(minikube ip)
+          echo "CLUSTER_IP=$CLUSTER_IP" >> $GITHUB_ENV
+        shell: bash
+
+      # Step 6: Get Kruize Port
+      - name: Get Kruize Port
+        run: |
+          export KRUIZE_PORT=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
+          echo "KRUIZE_PORT=$KRUIZE_PORT" >> $GITHUB_ENV
+        shell: bash
+
       - name: Build UI
         run: npm run build
 
   unit-test:
+    needs: build_ui
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
