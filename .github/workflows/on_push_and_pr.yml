@@ -64,8 +64,8 @@ jobs:
       - name: Get Minikube IP
         run: |
           ip=$(minikube ip)
-          echo "Minikube IP: $ip" >> $GITHUB_OUTPUT
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+          echo "Minikube IP=$ip" >> $GITHUB_OUTPUT
+        shell: bash
         env:
           MINIKUBE_HOME: /home/runner/work/_temp
           ROOT_DIR: /home/runner/work/kruize-ui/kruize-ui/autotune
@@ -75,7 +75,7 @@ jobs:
         run: |
           kruize_port=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
           echo "kruize_port=$kruize_port" >> $GITHUB_OUTPUT
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+        shell: bash
         env:
           MINIKUBE_HOME: /home/runner/work/_temp
           ROOT_DIR: /home/runner/work/kruize-ui/kruize-ui/autotune
