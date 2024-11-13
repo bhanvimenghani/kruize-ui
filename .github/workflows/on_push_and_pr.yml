@@ -112,6 +112,15 @@ jobs:
       - name: Build UI
         run: npm run build
 
+      - name: Install HTTP Server (serve)
+        run: npm install -g serve
+
+      - name: Serve UI on GitHub Runner
+        run: serve -s build -l 8080 & # Runs the server in the background
+
+      - name: Check if the app is running
+        run: curl http://localhost:8080
+
   unit-test:
     needs: build_ui
     runs-on: ubuntu-latest
