@@ -10,8 +10,8 @@ jobs:
   deploy_kruize:
     runs-on: ubuntu-20.04
     outputs:
-      minikube_ip: ${{ steps.deploy_kruize.outputs.minikube_ip }}
-      kruize_port: ${{ steps.deploy_kruize.outputs.kruize_port }}
+      minikube_ip: ${{ steps.get_minikube.outputs.minikube_ip }}
+      kruize_port: ${{ steps.get_kruize.outputs.kruize_port }}
     steps:
       - name: Checkout kruize/autotune repository
         uses: actions/checkout@v3
@@ -62,6 +62,7 @@ jobs:
           ./deploy.sh -c minikube -m crc -i quay.io/kruize/autotune_operator:0.1
 
       - name: Get Minikube IP
+        id: get_minikube
         run: |
           ip=$(minikube ip)
           echo "Minikube IP: $ip"
@@ -73,6 +74,7 @@ jobs:
 
       # Step to Get Kruize Port
       - name: Get Kruize Port
+        id: get_kruize
         run: |
           kruize_port=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
           echo "PORT : $kruize_port"
