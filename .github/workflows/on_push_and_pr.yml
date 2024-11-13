@@ -72,24 +72,17 @@ jobs:
           MINIKUBE_HOME: /home/runner/work/_temp
           ROOT_DIR: /home/runner/work/kruize-ui/kruize-ui/autotune
 
-      - name: Verify Minikube IP
-        run: |
-          echo "Minikube IP from environment: $minikube_ip"
-        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
       # Step to Get Kruize Port
       - name: Get Kruize Port
-        id: get_kruize_port
         run: |
-          export KRUIZE_PORT=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
+          KRUIZE_PORT=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
           echo "KRUIZE_PORT=$KRUIZE_PORT" >> $GITHUB_ENV
-        shell: bash
-        env:
-          kruize_port: ${{ env.KRUIZE_PORT }}
+          echo "KRUIZE_PORT: $KRUIZE_PORT"
 
-      - name: Debug Kruize Values
-        run: |
-          echo "Debugging Minikube IP and Kruize Port"
-          kubectl get svc -A
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+        env:
+          MINIKUBE_HOME: /home/runner/work/_temp
+          ROOT_DIR: /home/runner/work/kruize-ui/kruize-ui/autotune
 
   build_ui:
     needs: deploy_kruize
