@@ -102,13 +102,19 @@ jobs:
 
       - name: Export and Print Environment Variables
         run: |
-          echo "CLUSTER_IP=${{ needs.deploy_kruize.outputs.minikube_ip }}" >> $GITHUB_ENV
-          echo "KRUIZE_PORT=${{ needs.deploy_kruize.outputs.kruize_port }}" >> $GITHUB_ENV
+          echo "CLUSTER_IP=${{ needs.deploy_kruize.outputs.minikube_ip }}" 
+          echo "KRUIZE_PORT=${{ needs.deploy_kruize.outputs.kruize_port }}" >
 
         shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
 
       - name: Build UI
         run: npm run build
+
+      - name: Install http-server
+        run: npm install -g http-server
+
+      - name: Serve Built UI
+        run: http-server ./build -p 8080 &
 
   # jobs:
   #   deploy_kruize:
