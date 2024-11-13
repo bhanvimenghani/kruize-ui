@@ -58,27 +58,6 @@ jobs:
           cat ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml
           ./deploy.sh -c minikube -m crc -i quay.io/kruize/autotune_operator:0.1
 
-      - name: Capture ffdc logs
-        if: always()
-        run: |
-          echo "Capturing ffdc logs"
-          cd autotune
-          ./scripts/ffdc.sh -m crc -d ${GITHUB_WORKSPACE}/kruize_test_results
-
-      - name: Archive results
-        if: always()
-        run: |
-          cd ${GITHUB_WORKSPACE}
-          tar cvf crc_results.tar kruize_test_results
-
-      - name: Upload results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: crc-results
-          path: ./crc_results.tar
-          retention-days: 2
-
   build_ui:
     needs: deploy_kruize
     runs-on: ubuntu-latest
