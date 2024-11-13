@@ -64,6 +64,7 @@ jobs:
       - name: Get Minikube IP
         run: |
           ip=$(minikube ip)
+          echo "Minikube IP: $ip"
           echo "Minikube IP=$ip" >> $GITHUB_OUTPUT
         shell: bash
         env:
@@ -74,6 +75,7 @@ jobs:
       - name: Get Kruize Port
         run: |
           kruize_port=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
+          echo "PORT : $kruize_port"
           echo "kruize_port=$kruize_port" >> $GITHUB_OUTPUT
         shell: bash
         env:
@@ -101,18 +103,12 @@ jobs:
 
       - name: Export and Print Environment Variables
         run: |
-          echo "CLUSTER_IP"
-          echo "KRUIZE_PORT"
+          echo "Minikube IP: $minikube_ip"
+          echo "Kruize Port: $kruize_port"
         shell: bash
 
       - name: Build UI
         run: npm run build
-
-      - name: Install http-server
-        run: npm install -g http-server
-
-      - name: Serve Built UI
-        run: http-server ./build -p 8080 &
 
   unit-test:
     needs: build_ui
