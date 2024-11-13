@@ -9,6 +9,9 @@ on:
 jobs:
   deploy_kruize:
     runs-on: ubuntu-20.04
+    outputs:
+      minikube_ip: ${{ steps.deploy_kruize.outputs.minikube_ip }}
+      kruize_port: ${{ steps.deploy_kruize.outputs.kruize_port }}
     steps:
       - name: Checkout kruize/autotune repository
         uses: actions/checkout@v3
@@ -58,10 +61,20 @@ jobs:
           cat ./manifests/crc/default-db-included-installation/minikube/kruize-crc-minikube.yaml
           ./deploy.sh -c minikube -m crc -i quay.io/kruize/autotune_operator:0.1
 
-      - name: set ip and port
+      - name: Get Minikube IP
         run: |
-          echo "minikube_ip=$minikube_ip" >> $GITHUB_ENV
-          echo "kruize_port=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)" >> $GITHUB_ENV
+          ip=$(minikube ip)
+          echo "Minikube IP: $ip" >> $GITHUB_OUTPUT
+        shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+        env:
+          MINIKUBE_HOME: /home/runner/work/_temp
+          ROOT_DIR: /home/runner/work/kruize-ui/kruize-ui/autotune
+
+      # Step to Get Kruize Port
+      - name: Get Kruize Port
+        run: |
+          kruize_port=$(kubectl -n monitoring get svc kruize --no-headers -o=custom-columns=PORT:.spec.ports[*].nodePort 2>/dev/null)
+          echo "kruize_port=$kruize_port" >> $GITHUB_OUTPUT
         shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
         env:
           MINIKUBE_HOME: /home/runner/work/_temp
@@ -70,6 +83,9 @@ jobs:
   build_ui:
     needs: deploy_kruize
     runs-on: ubuntu-latest
+    env:
+      minikube_ip: ${{ needs.deploy_kruize.outputs.minikube_ip}}
+      kruize_port: ${{ needs.deploy_kruize.outputs.kruize_port}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -85,8 +101,8 @@ jobs:
 
       - name: Export and Print Environment Variables
         run: |
-          echo "CLUSTER_IP=${{ env.minikube_ip }}" 
-          echo "KRUIZE_PORT=${{ env.kruize_port }}"
+          echo "CLUSTER_IP"
+          echo "KRUIZE_PORT"
         shell: bash
 
       - name: Build UI
