@@ -110,8 +110,8 @@ jobs:
       # Step 6: Print to verify that the environment variables are correctly loaded.
       - name: Print Values
         run: |
-          echo "Minikube IP: ${env.CLUSTER_IP}"
-          echo "Kruize Port: ${env.KRUIZE_PORT}"
+          echo "Minikube IP: $minikube_ip"
+          echo "Kruize Port: $KRUIZE_PORT"
 
       - name: Build UI
         run: npm run build
