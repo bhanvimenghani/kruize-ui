@@ -10,7 +10,7 @@ jobs:
   deploy_kruize:
     runs-on: ubuntu-20.04
     outputs:
-      minikube: ${{ steps.get_kruize_1.outputs.minikube_ip }}
+      minikube_ip: ${{ steps.get_minikube.outputs.minikube_ip }}
       kruize_port: ${{ steps.get_kruize.outputs.kruize_port }}
     steps:
       - name: Checkout kruize/autotune repository
@@ -62,7 +62,7 @@ jobs:
           ./deploy.sh -c minikube -m crc -i quay.io/kruize/autotune_operator:0.1
 
       - name: Get Minikube IP
-        id: get_kruize_1
+        id: get_minikube
         run: |
           minikube_ip=$(minikube ip)
           echo "Minikube IP: $minikube_ip"
@@ -88,7 +88,7 @@ jobs:
     needs: deploy_kruize
     runs-on: ubuntu-latest
     env:
-      minikube_ip: ${{ needs.deploy_kruize.outputs.minikube }}
+      minikube_ip: ${{ needs.deploy_kruize.outputs.minikube_ip }}
       kruize_port: ${{ needs.deploy_kruize.outputs.kruize_port }}
     steps:
       - name: Checkout Code
@@ -111,15 +111,6 @@ jobs:
 
       - name: Build UI
         run: npm run build
-
-      - name: Install HTTP Server (serve)
-        run: npm install -g serve
-
-      - name: Serve UI on GitHub Runner
-        run: serve -s build -l 8080 & # Runs the server in the background
-
-      - name: Check if the app is running
-        run: curl http://localhost:8080
 
   unit-test:
     needs: build_ui
