@@ -14,7 +14,7 @@ jobs:
       kruize_port: ${{ steps.get_kruize.outputs.kruize_port }}
     steps:
       - name: Checkout kruize/autotune repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: kruize/autotune
           ref: mvp_demo
