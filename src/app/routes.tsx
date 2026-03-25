@@ -9,6 +9,10 @@ import { ClusterGroupTables } from './Analytics/LocalMonitoring/ClusterGroupTabl
 import { CreateExperiment } from './Analytics/LocalMonitoring/CreateExperiment';
 import { Monitoring } from './Analytics/LocalMonitoring/RecommendationsForLocalMonitoring/RemoteMonitoring/Monitoring';
 import { CreateBulkExperiment } from './Analytics/LocalMonitoring/CreateBulkExperiment';
+import { CreateExperimentJSON } from './Analytics/LocalMonitoring/CreateExperimentJSON';
+import { LayersList } from './Analytics/Layers/LayersList';
+import { CreateLayer } from './Analytics/Layers/CreateLayer';
+import { EditLayer } from './Analytics/Layers/EditLayer';
 import { useEffect, useState } from 'react';
 
 let routeFocusTimer: number;
@@ -59,6 +63,22 @@ const routes: AppRouteConfig[] = [
         path: '/experiments',
         title: 'createexp ',
         menu: true
+      },
+      {
+        component: CreateExperimentJSON,
+        exact: true,
+        label: 'Create Experiment JSON',
+        path: '/create-experiment-json',
+        title: 'Create Experiment JSON',
+        menu: true
+      },
+      {
+        component: LayersList,
+        exact: true,
+        label: 'Layers',
+        path: '/layers',
+        title: 'Layers',
+        menu: true
       }
     ],
     menu: true
@@ -93,6 +113,20 @@ const routes: AppRouteConfig[] = [
         label: 'Create Bulk Experiment',
         path: '/createbulkexp',
         title: 'createbulkexp '
+      },
+      {
+        component: CreateLayer,
+        exact: true,
+        label: 'Create Layer',
+        path: '/create-layer',
+        title: 'Create Layer'
+      },
+      {
+        component: EditLayer,
+        exact: true,
+        label: 'Edit Layer',
+        path: '/edit-layer/:layerName',
+        title: 'Edit Layer'
       }
     ],
     menu: false

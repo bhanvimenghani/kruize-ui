@@ -34,6 +34,7 @@ const Monitoring = () => {
     level2: { info: {}, others: {} },
     level3: {}
   });
+  const [selectedTerm, setSelectedTerm] = useState('business_quarter_term');
 
   return (
     <>
@@ -54,14 +55,18 @@ const Monitoring = () => {
       </PageSection>
       <>
       {displyRecc && (
-        <RecommendationTables
-          setEndTimeArray={setEndTimeArray}
-          endTimeArray={endTimeArray}
-          setSREdata={setSREdata}
-          SREdata={SREdata}
-          notification={notifications}
-          setNotification={setNotifications}
-        />
+        <>
+          <RecommendationTables
+            setEndTimeArray={setEndTimeArray}
+            endTimeArray={endTimeArray}
+            setSREdata={setSREdata}
+            SREdata={SREdata}
+            notification={notifications}
+            setNotification={setNotifications}
+            selectedTerm={selectedTerm}
+            setSelectedTerm={setSelectedTerm}
+          />
+        </>
       )}
     </>
     </>

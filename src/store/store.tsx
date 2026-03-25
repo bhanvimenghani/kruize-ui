@@ -6,10 +6,13 @@ const middleware: any = [];
 middleware.push(createLogger());
 const enhancers = [...middleware];
 
-export default configureStore({
+const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     window.location.hostname === "localhost"
       ? getDefaultMiddleware().concat(enhancers)
       : getDefaultMiddleware(),
 });
+
+export type AppDispatch = typeof store.dispatch;
+export default store;

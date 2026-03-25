@@ -16,13 +16,17 @@ import {
   CardBody,
   Card,
   PageSection,
-  PageSectionVariants
+  PageSectionVariants,
+  Grid,
+  GridItem,
+  ExpandableSection
 } from '@patternfly/react-core';
 import React, { useEffect, useState } from 'react';
 import { getRecommendationsURL, getRecommendationsURLWithParams } from '@app/CentralConfig';
 import { TabSection } from './RecommendationComponents/TabSection';
 import { WorkloadDetails } from './RecommendationComponents/WorkloadDetails';
 import { InfoCircleIcon, ExclamationCircleIcon, ExclamationTriangleIcon } from '@patternfly/react-icons';
+import { mockTermsData } from './TermSelection';
 
 export const alertIconMap = {
   info: <InfoCircleIcon style={{ color: '#2B9AF3' }} />,
@@ -41,6 +45,8 @@ const RecommendationTables = (props: {
   setSREdata;
   notification;
   setNotification;
+  selectedTerm;
+  setSelectedTerm;
 }) => {
   // @ts-ignore
   const list_recommendations_url: string = getRecommendationsURLWithParams(
@@ -57,6 +63,8 @@ const RecommendationTables = (props: {
     cpu: [],
     mmr: []
   });
+  const [isExpanded, setIsExpanded] = useState(false);
+  const termOptions = Object.keys(mockTermsData);
   const days = [
     { id: '1', value: 'short_term', label: 'Last 1 day', disabled: false },
     { id: '2', value: 'medium_term', label: 'Last 7 days', disabled: false },
@@ -304,53 +312,95 @@ const RecommendationTables = (props: {
           <StackItem>
             <Stack hasGutter>
               {isDataPresent && (
-                <Flex className="example-border">
-                  <Flex>
-                    <FlexItem>
-                      <Split hasGutter>
-                        <SplitItem>
+                <>
+                  <Grid hasGutter>
+                    <GridItem>
+                      <TextContent>
+                        <Text component={TextVariants.h4}>Active Terms:</Text>
+                      </TextContent>
+                    </GridItem>
+                    <GridItem span={4}>
+                      <FormSelect
+                        value={props.selectedTerm}
+                        onChange={(_event, value: string) => props.setSelectedTerm(value)}
+                        aria-label="Select Term"
+                      >
+                        {termOptions.map((option, index) => (
+                          <FormSelectOption key={index} value={option} label={option} />
+                        ))}
+                      </FormSelect>
+                    </GridItem>
+                  </Grid>
+                  <Card>
+                    <CardBody>
+                      <TextContent>
+                        <Text component={TextVariants.h4}>Term Details</Text>
+                      </TextContent>
+                      <br />
+                      <Grid hasGutter>
+                        <GridItem span={12}>
                           <TextContent>
-                            <Text component={TextVariants.p}>Monitoring End Time</Text>
+                            <Text component={TextVariants.p}>
+                              <strong>Duration:</strong>
+                            </Text>
+                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].duration}</Text>
                           </TextContent>
-                        </SplitItem>
-                        <SplitItem>
-                          <FormSelect
-                            value={endtime}
-                            onChange={(_event, value: string) => onChange(value)}
-                            aria-label="FormSelect Input"
-                            style={{ width: '300px' }}
+                        </GridItem>
+                        <GridItem span={12}>
+                          <TextContent>
+                            <Text component={TextVariants.p}>
+                              <strong>Schedule:</strong>
+                            </Text>
+                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].schedule}</Text>
+                          </TextContent>
+                        </GridItem>
+                        <GridItem span={12}>
+                          <TextContent>
+                            <Text component={TextVariants.p}>
+                              <strong>Daily Window:</strong>
+                            </Text>
+                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].dailyWindow}</Text>
+                          </TextContent>
+                        </GridItem>
+                        <GridItem span={12}>
+                          <br />
+                          <ExpandableSection
+                            toggleText={isExpanded ? 'Hide Advanced Settings' : 'Show Advanced Settings'}
+                            onToggle={() => setIsExpanded(!isExpanded)}
+                            isExpanded={isExpanded}
                           >
-                            {props.endTimeArray &&
-                              props.endTimeArray.map((option, index) => (
-                                <FormSelectOption key={index} value={option} label={option} />
-                              ))}
-                          </FormSelect>
-                        </SplitItem>
-                      </Split>
-                    </FlexItem>
-                  </Flex>
-                  <FlexItem>
-                    <Split hasGutter>
-                      <SplitItem>
-                        <TextContent>
-                          <Text component={TextVariants.p}>View optimization based on </Text>
-                        </TextContent>
-                      </SplitItem>
-                      <SplitItem>
-                        <FormSelect
-                          value={day}
-                          onChange={(_event, value: string) => onDayChange(value)}
-                          aria-label="days dropdown"
-                          style={{ width: '150px' }}
-                        >
-                          {filteredDays.map((selection, index) => (
-                            <FormSelectOption key={index} value={selection.value} label={selection.label} />
-                          ))}
-                        </FormSelect>
-                      </SplitItem>
-                    </Split>
-                  </FlexItem>
-                </Flex>
+                            <Grid hasGutter>
+                              <GridItem span={12}>
+                                <TextContent>
+                                  <Text component={TextVariants.p}>
+                                    <strong>Measurement Duration:</strong>
+                                  </Text>
+                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.measurementDuration}</Text>
+                                </TextContent>
+                              </GridItem>
+                              <GridItem span={12}>
+                                <TextContent>
+                                  <Text component={TextVariants.p}>
+                                    <strong>Target Utilization:</strong>
+                                  </Text>
+                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.targetUtilization}</Text>
+                                </TextContent>
+                              </GridItem>
+                              <GridItem span={12}>
+                                <TextContent>
+                                  <Text component={TextVariants.p}>
+                                    <strong>Optimization Function:</strong>
+                                  </Text>
+                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.optimizationFunction}</Text>
+                                </TextContent>
+                              </GridItem>
+                            </Grid>
+                          </ExpandableSection>
+                        </GridItem>
+                      </Grid>
+                    </CardBody>
+                  </Card>
+                </>
               )}
               <Card style={{ width: '800px' }}>
                 {!isDataPresent && (

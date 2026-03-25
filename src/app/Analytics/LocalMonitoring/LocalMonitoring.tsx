@@ -9,9 +9,10 @@ import React, { useEffect } from 'react';
 import { DatasourceTable } from './DatasourceTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { getListOfDataSources } from '@actions/DataSourceActionCreator';
+import { AppDispatch } from '../../../store/store';
 
 /*
-  This is the first page of Local Monitoring use case on the ui 
+  This is the first page of Local Monitoring use case on the ui
   it calls the fetchDatasources api as page is refreshed
   and displays datasources table if data avaliable
 
@@ -19,7 +20,7 @@ import { getListOfDataSources } from '@actions/DataSourceActionCreator';
 
 const LocalMonitoring = () => {
   const dataSource: any = useSelector<any>(state => state.dataSource)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     ( async() => await dispatch(getListOfDataSources()) )()
