@@ -338,28 +338,25 @@ const RecommendationTables = (props: {
                       </TextContent>
                       <br />
                       <Grid hasGutter>
-                        <GridItem span={12}>
+                        <GridItem span={4}>
                           <TextContent>
                             <Text component={TextVariants.p}>
-                              <strong>Duration:</strong>
+                              <strong>Duration:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].duration}
                             </Text>
-                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].duration}</Text>
                           </TextContent>
                         </GridItem>
-                        <GridItem span={12}>
+                        <GridItem span={4}>
                           <TextContent>
                             <Text component={TextVariants.p}>
-                              <strong>Schedule:</strong>
+                              <strong>Schedule:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].schedule}
                             </Text>
-                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].schedule}</Text>
                           </TextContent>
                         </GridItem>
-                        <GridItem span={12}>
+                        <GridItem span={4}>
                           <TextContent>
                             <Text component={TextVariants.p}>
-                              <strong>Daily Window:</strong>
+                              <strong>Daily Window:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].dailyWindow}
                             </Text>
-                            <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].dailyWindow}</Text>
                           </TextContent>
                         </GridItem>
                         <GridItem span={12}>
@@ -370,28 +367,25 @@ const RecommendationTables = (props: {
                             isExpanded={isExpanded}
                           >
                             <Grid hasGutter>
-                              <GridItem span={12}>
+                              <GridItem span={4}>
                                 <TextContent>
                                   <Text component={TextVariants.p}>
-                                    <strong>Measurement Duration:</strong>
+                                    <strong>Measurement Duration:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].advancedSettings.measurementDuration}
                                   </Text>
-                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.measurementDuration}</Text>
                                 </TextContent>
                               </GridItem>
-                              <GridItem span={12}>
+                              <GridItem span={4}>
                                 <TextContent>
                                   <Text component={TextVariants.p}>
-                                    <strong>Target Utilization:</strong>
+                                    <strong>Target Utilization:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].advancedSettings.targetUtilization}
                                   </Text>
-                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.targetUtilization}</Text>
                                 </TextContent>
                               </GridItem>
-                              <GridItem span={12}>
+                              <GridItem span={4}>
                                 <TextContent>
                                   <Text component={TextVariants.p}>
-                                    <strong>Optimization Function:</strong>
+                                    <strong>Optimization Function:</strong>&nbsp;&nbsp;{mockTermsData[props.selectedTerm].advancedSettings.optimizationFunction}
                                   </Text>
-                                  <Text component={TextVariants.p}>{mockTermsData[props.selectedTerm].advancedSettings.optimizationFunction}</Text>
                                 </TextContent>
                               </GridItem>
                             </Grid>
